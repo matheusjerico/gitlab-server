@@ -1,0 +1,12 @@
+- hosts: _gitlab
+  become: yes
+  user: ubuntu
+  gather_facts: no
+  pre_tasks:
+  - name: 'Updating repo'
+    raw: 'apt-get update'
+  - name: 'Installing python'
+    raw: 'apt-get install -y python'
+  roles:
+  - role: install-gitlab
+    tags: ["install_gitlab_role"]

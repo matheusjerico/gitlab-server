@@ -1,0 +1,32 @@
+- name: Install Docker
+  ansible.builtin.shell:
+    cmd: curl -fsSL https://get.docker.com | bash
+  notify: restart_docker
+
+- name: Install dependencies 
+  ansible.builtin.apt:
+    pkg:
+    - curl
+    - openssh-server
+    - ca-certificates
+    - tzdata
+    - perl
+    - postfix
+
+- name: Configure the necessary dependencies
+  ansible.builtin.shell:
+    cmd: curl https://packages.gitlab.com/install/repositories/gitlab/{{ gitlab_distribution }}/script.deb.sh | bash
+
+- name: Install gitlab ce
+  ansible.builtin.apt:
+    pkg: "{{ gitlab_distribution }}"
+  async: 1800
+  poll: 60
+
+- name: Get password from file
+  ansible.builtin.shell: cat {{ gitlab_password_file }}
+  register: result
+
+- name: Print return information from the previous task
+  ansible.builtin.debug:
+    var: result

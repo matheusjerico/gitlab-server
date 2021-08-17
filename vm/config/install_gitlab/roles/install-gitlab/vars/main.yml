@@ -1,0 +1,4 @@
+---
+# vars file for install-gitlab
+gitlab_distribution: gitlab-ce
+gitlab_password_file: /etc/gitlab/initial_root_password

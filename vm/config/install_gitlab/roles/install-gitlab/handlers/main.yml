@@ -1,0 +1,10 @@
+---
+# handlers file for install-packages
+- name: restart_docker
+  ansible.builtin.service:
+    name: docker
+    state: restarted
+
+# - name: restart_gitlab
+#   ansible.builtin.shell:
+#     cmd: gitlab-ctl restart
